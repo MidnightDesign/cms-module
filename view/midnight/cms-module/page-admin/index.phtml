@@ -1,6 +1,30 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Midnight\Page\PageInterface[]  $pages
+ */
+?>
 <h1>Seiten</h1>
 <ul class="page-options">
     <li>
         <a href="<?= $this->url('zfcadmin/cms/page/create') ?>">Seite erstellen&hellip;</a>
     </li>
 </ul>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($pages as $page): ?>
+        <tr>
+            <td>
+                <a href="<?= $this->url('zfcadmin/cms/page/edit', array('page_id' => $page->getId())) ?>">
+                    <?= $page->getName() ?>
+                </a>
+            </td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>

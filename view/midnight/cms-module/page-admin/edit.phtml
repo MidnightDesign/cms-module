@@ -1,0 +1,39 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Midnight\Page\PageInterface    $page
+ */
+$createBlockUrl = $this->url('zfcadmin/cms/block/create', array(), array('query' => array('page_id' => $page->getId())));
+?>
+<h1><?= $page->getName() ?></h1>
+<ul class="page-options">
+    <li>
+        <a href="<?= $createBlockUrl ?>">Block hinzufügen&hellip;</a>
+    </li>
+</ul>
+<h2>Blöcke</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($page->getBlocks() as $block): ?>
+        <?php
+        $url = $this->url(
+            'zfcadmin/cms/block/edit',
+            array('block_id' => $block->getId()),
+            array('query' => array('page_id' => $page->getId()))
+        );
+        ?>
+        <tr>
+            <td>
+                <a href="<?= $url ?>">
+                    <?= get_class($block) ?>
+                </a>
+            </td>
+        </tr>
+    <?php endforeach ?>
+    </tbody>
+</table>

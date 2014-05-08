@@ -1,0 +1,22 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Midnight\Page\PageInterface    $page
+ * @var array                           $blockTypes
+ */
+?>
+<?php foreach ($page->getBlocks() as $block): ?>
+    <?php
+    foreach ($blockTypes as $type) {
+        if($block instanceof $type['class']) {
+            break;
+        }
+    }
+    if(empty($type)) {
+        continue;
+    }
+//    /** @var $renderer Renint */
+//    $renderer = new $type['renderer'];
+    ?>
+    <?= $block->getHtml() ?>
+<?php endforeach ?>

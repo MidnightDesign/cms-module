@@ -1,0 +1,22 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var array                           $blockTypes
+ * @var \Midnight\Page\PageInterface    $page
+ */
+?>
+<h1>Neuer Block</h1>
+<ul>
+    <?php foreach ($blockTypes as $key => $type): ?>
+        <?php
+        $url = $this->url(
+            'zfcadmin/cms/block/create',
+            array('block_type' => $key),
+            array('query' => array('page_id' => $page->getId()))
+        );
+        ?>
+        <li>
+            <a href="<?= $url ?>"><?= $type['name'] ?></a>
+        </li>
+    <?php endforeach ?>
+</ul>

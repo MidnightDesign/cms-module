@@ -4,19 +4,21 @@ namespace Midnight\CmsModule\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Midnight\CmsModule\Form\PageForm;
+use Midnight\Page\Page;
+use Midnight\Page\PageInterface;
 use Zend\Http\PhpEnvironment\Request;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 /**
  * Class PageAdminController
  * @package Midnight\CmsModule\Controller
  */
-class PageAdminController extends AbstractActionController
+class PageAdminController extends AbstractCmsController
 {
     public function indexAction()
     {
-        $vm = new ViewModel();
+        $pages = $this->getPageStorage()->getAll();
+        $vm = new ViewModel(array('pages' => $pages));
         $vm->setTemplate('midnight/cms-module/page-admin/index.phtml');
         return $vm;
     }
@@ -24,15 +26,16 @@ class PageAdminController extends AbstractActionController
     public function createAction()
     {
         $form = new PageForm();
+        $form->bind(new Page());
 
         $request = $this->getRequest();
-        if($request instanceof Request && $request->isPost()) {
+        if ($request instanceof Request && $request->isPost()) {
             $form->setData($request->getPost());
-            if($form->isValid()) {
+            if ($form->isValid()) {
+                /** @var $page PageInterface */
                 $page = $form->getObject();
-                $objectManager = $this->getObjectManager();
-                $objectManager->persist($page);
-                $objectManager->flush();
+                $this->getPageStorage()->save($page);
+                return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
             }
         }
 
@@ -41,11 +44,13 @@ class PageAdminController extends AbstractActionController
         return $vm;
     }
 
-    /**
-     * @return ObjectManager
-     */
-    private function getObjectManager()
+    public function editAction()
     {
-        return $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        $page = $this->getPageStorage()->load($this->params()->fromRoute('page_id'));
+        $blockTypes = $this->getBlockTypes();
+
+        $vm = new ViewModel(array('page' => $page, 'blockTypes' => $blockTypes));
+        $vm->setTemplate('midnight/cms-module/page-admin/edit.phtml');
+        return $vm;
     }
 }
