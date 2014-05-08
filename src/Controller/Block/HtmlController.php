@@ -39,4 +39,20 @@ class HtmlController extends AbstractCmsController implements BlockControllerInt
         }
         return $this->redirect()->toRoute('cms_page', array('page_id' => $page->getId()));
     }
+
+    public function setHtmlAction()
+    {
+        $blockId = $this->params()->fromRoute('block_id');
+        $storageInterface = $this->getBlockStorage();
+        $block = $storageInterface->load($blockId);
+        if (!$block instanceof Html) {
+            throw new \RuntimeException(sprintf(
+                'Block %s is not an instance of Midnight\Block\Html',
+                $block->getId()
+            ));
+        }
+        $block->setHtml($this->params()->fromPost('html'));
+        $storageInterface->save($block);
+        return $this->getResponse();
+    }
 }

@@ -3,6 +3,7 @@
 namespace Midnight\CmsModule\View\Helper;
 
 use Midnight\Block\Html;
+use Midnight\Wysiwyg\View\Helper\Wysiwyg;
 use Zend\Form\View\Helper\AbstractHelper;
 
 class HtmlBlock extends AbstractHelper
@@ -35,6 +36,10 @@ class HtmlBlock extends AbstractHelper
 
     private function renderEditable(Html $block)
     {
-        return sprintf('<div contenteditable="true">%s</div>', $block->getHtml());
+        /** @var $wysiwyg Wysiwyg */
+        $wysiwyg = $this->getView()->plugin('wysiwyg');
+        $urlPlugin = $this->getView()->plugin('url');
+        $saveUrl = $urlPlugin('zfcadmin/cms/block/set_html', array('block_id' => $block->getId()));
+        return $wysiwyg($block->getHtml(), array('data-save-url' => $saveUrl));
     }
 } 

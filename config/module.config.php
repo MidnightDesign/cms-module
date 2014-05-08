@@ -79,6 +79,16 @@ return array(
                                             'defaults' => array('action' => 'edit'),
                                         ),
                                     ),
+                                    'set_html' => array(
+                                        'type' => 'Segment',
+                                        'options' => array(
+                                            'route' => '/set-html/:block_id',
+                                            'defaults' => array(
+                                                'controller' => __NAMESPACE__ . 'Block\Html',
+                                                'action' => 'set-html',
+                                            ),
+                                        ),
+                                    )
                                 ),
                             ),
                         ),
