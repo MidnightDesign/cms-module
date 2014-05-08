@@ -5,7 +5,8 @@
         "php": ">=5.3.3",
         "rwoverdijk/assetmanager": "~1.3",
         "midnight/admin-module": "dev-master",
-        "midnight/page": "dev-master"
+        "midnight/page": "dev-master",
+        "midnight/wysiwyg": "dev-master"
     },
     "autoload": {
         "psr-4": {

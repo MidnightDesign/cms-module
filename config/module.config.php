@@ -108,6 +108,17 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+    'view_helpers' => array(
+        'factories' => array(
+            'block' => 'Midnight\CmsModule\View\Helper\BlockFactory',
+            'htmlBlock' => 'Midnight\CmsModule\View\Helper\HtmlBlockFactory',
+        ),
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'cms.block_type_manager' => 'Midnight\CmsModule\Service\BlockTypeManagerFactory',
+        ),
+    ),
     'asset_manager' => array(
         'resolver_configs' => array(
             'paths' => array(
@@ -121,6 +132,7 @@ return array(
                 'name' => 'HTML',
                 'class' => 'Midnight\Block\Html',
                 'controller' => __NAMESPACE__ . 'Block\Html',
+                'renderer' => 'htmlBlock',
             ),
         ),
     ),

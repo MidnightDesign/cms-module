@@ -15,8 +15,6 @@
     if(empty($type)) {
         continue;
     }
-//    /** @var $renderer Renint */
-//    $renderer = new $type['renderer'];
     ?>
-    <?= $block->getHtml() ?>
+    <?= $this->block($block) ?>
 <?php endforeach ?>
