@@ -2,6 +2,7 @@
 
 namespace Midnight\CmsModule\Controller;
 
+use Midnight\CmsModule\Controller\Block\BlockControllerInterface;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -28,8 +29,16 @@ class BlockAdminController extends AbstractCmsController
                     $typeKey
                 ));
             }
-            $this->forward()->dispatch(
-                $blockTypes[$typeKey]['controller'],
+            $controllerKey = $blockTypes[$typeKey]['controller'];
+            $controller = $this->getServiceLocator()->get('ControllerManager')->get($controllerKey);
+            if (!$controller instanceof BlockControllerInterface) {
+                throw new \Exception(sprintf(
+                    '%s must implement Midnight\CmsModule\Controller\Block\BlockControllerInterface.',
+                    get_class($controller)
+                ));
+            }
+            return $this->forward()->dispatch(
+                $controllerKey,
                 array('action' => 'create', 'page_id' => $page->getId())
             );
         }

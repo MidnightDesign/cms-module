@@ -8,11 +8,11 @@
 <?php foreach ($page->getBlocks() as $block): ?>
     <?php
     foreach ($blockTypes as $type) {
-        if($block instanceof $type['class']) {
+        if ($block instanceof $type['class']) {
             break;
         }
     }
-    if(empty($type)) {
+    if (empty($type)) {
         continue;
     }
     ?>

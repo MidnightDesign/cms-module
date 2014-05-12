@@ -31,6 +31,12 @@ class BlockTypeManager implements BlockTypeManagerInterface
     {
         foreach ($this->types as $type) {
             if ($block instanceof $type['class']) {
+                if (!isset($type['renderer'])) {
+                    throw new \RuntimeException(sprintf(
+                        'The configuration for %s is missing a "renderer" key.',
+                        $type['class']
+                    ));
+                }
                 return $type['renderer'];
             }
         }
