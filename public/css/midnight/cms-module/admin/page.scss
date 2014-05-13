@@ -1,0 +1,32 @@
+@import "../../../../../../admin-module/public/css/midnight/admin-module/imports";
+
+.edit-page {
+    .blocks {
+        $border-color: #d3d3d3;
+        @include list-killer;
+        border: solid 1px $border-color;
+        border-radius: .2em;
+        & > li {
+            padding: lh(.5);
+            border-top: solid 1px $border-color;
+            clear: right;
+            overflow: hidden;
+            &:first-child {
+                border-top: none;
+            }
+        }
+        ul.options {
+            @include list-killer;
+            float: right;
+            display: flex;
+            padding-left: lh(1);
+            padding-bottom: lh(1);
+            & > li {
+                margin-left: lh(.5);
+            }
+            a {
+                @include button-small;
+            }
+        }
+    }
+}

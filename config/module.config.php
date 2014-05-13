@@ -128,7 +128,11 @@ return array(
     'view_helpers' => array(
         'factories' => array(
             'block' => 'Midnight\CmsModule\View\Helper\BlockFactory',
+            'blockPreview' => 'Midnight\CmsModule\View\Helper\BlockPreviewFactory',
             'htmlBlock' => 'Midnight\CmsModule\View\Helper\HtmlBlockFactory',
+        ),
+        'invokables' => array(
+            'htmlBlockPreview' => 'Midnight\CmsModule\View\Helper\HtmlBlockPreview',
         ),
     ),
     'service_manager' => array(
@@ -146,10 +150,11 @@ return array(
     'cms' => array(
         'blocks' => array(
             'html' => array(
-                'name' => 'HTML',
+                'name' => 'Text',
                 'class' => 'Midnight\Block\Html',
                 'controller' => __NAMESPACE__ . 'Block\Html',
                 'renderer' => 'htmlBlock',
+                'preview_renderer' => 'htmlBlockPreview',
             ),
         ),
     ),

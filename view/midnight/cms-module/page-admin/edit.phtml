@@ -4,43 +4,40 @@
  * @var \Midnight\Page\PageInterface    $page
  */
 $createBlockUrl = $this->url('zfcadmin/cms/block/create', array(), array('query' => array('page_id' => $page->getId())));
+$this->headLink()->appendStylesheet($this->basePath('css/midnight/cms-module/admin/page.css'));
 ?>
-<h1><?= $page->getName() ?></h1>
-<ul class="page-options">
-    <li>
-        <a href="<?= $createBlockUrl ?>">Block hinzufügen&hellip;</a>
-    </li>
-</ul>
-<h2>Blöcke</h2>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($page->getBlocks() as $block): ?>
-        <?php
-        $url = $this->url(
-            'zfcadmin/cms/block/edit',
-            array('block_id' => $block->getId()),
-            array('query' => array('page_id' => $page->getId()))
-        );
-        $deleteUrl = $this->url(
-            'zfcadmin/cms/page/delete_block',
-            array('page_id' => $page->getId(), 'block_id' => $block->getId())
-        );
-        ?>
-        <tr>
-            <td>
-                <a href="<?= $url ?>">
-                    <?= get_class($block) ?>
-                </a>
-            </td>
-            <td>
-                <a href="<?= $deleteUrl ?>">Löschen</a>
-            </td>
-        </tr>
-    <?php endforeach ?>
-    </tbody>
-</table>
+<div class="edit-page">
+    <h1><?= $page->getName() ?></h1>
+    <ul class="page-options">
+        <li>
+            <a href="<?= $createBlockUrl ?>">Block hinzufügen&hellip;</a>
+        </li>
+    </ul>
+    <h2>Blöcke</h2>
+    <ul class="blocks">
+        <?php foreach ($page->getBlocks() as $block): ?>
+            <?php
+            $url = $this->url(
+                'zfcadmin/cms/block/edit',
+                array('block_id' => $block->getId()),
+                array('query' => array('page_id' => $page->getId()))
+            );
+            $deleteUrl = $this->url(
+                'zfcadmin/cms/page/delete_block',
+                array('page_id' => $page->getId(), 'block_id' => $block->getId())
+            );
+            ?>
+            <li>
+                <ul class="options">
+                    <li>
+                        <a href="<?= $url ?>">Bearbeiten</a>
+                    </li>
+                    <li>
+                        <a href="<?= $deleteUrl ?>" class="delete confirm">Löschen</a>
+                    </li>
+                </ul>
+                <?= $this->blockPreview($block) ?>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

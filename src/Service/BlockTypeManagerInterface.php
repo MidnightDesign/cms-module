@@ -12,4 +12,11 @@ interface BlockTypeManagerInterface
      * @return string
      */
     public function getRendererFor(BlockInterface $block);
+
+    /**
+     * @param BlockInterface $block
+     *
+     * @return string
+     */
+    public function getPreviewRendererFor(BlockInterface $block);
 }
