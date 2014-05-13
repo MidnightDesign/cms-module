@@ -26,6 +26,9 @@
             }
             a {
                 @include button-small;
+                &.delete {
+                    @include button-danger;
+                }
             }
         }
     }
