@@ -52,6 +52,13 @@ return array(
                                             'defaults' => array('action' => 'edit'),
                                         ),
                                     ),
+                                    'delete_block' => array(
+                                        'type' => 'Segment',
+                                        'options' => array(
+                                            'route' => '/delete-block/:page_id/:block_id',
+                                            'defaults' => array('action' => 'delete-block'),
+                                        ),
+                                    ),
                                 ),
                             ),
                             'block' => array(

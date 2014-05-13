@@ -53,4 +53,16 @@ class PageAdminController extends AbstractCmsController
         $vm->setTemplate('midnight/cms-module/page-admin/edit.phtml');
         return $vm;
     }
+
+    public function deleteBlockAction()
+    {
+        $pageStorage = $this->getPageStorage();
+        $page = $pageStorage->load($this->params()->fromRoute('page_id'));
+        $block = $page->getBlock($this->params()->fromRoute('block_id'));
+        $page->removeBlock($block);
+        $this->getBlockStorage()->delete($block);
+        $pageStorage->save($page);
+        $this->flashMessenger()->addSuccessMessage('The block was successfully deleted.');
+        return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
+    }
 }

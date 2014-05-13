@@ -26,12 +26,19 @@ $createBlockUrl = $this->url('zfcadmin/cms/block/create', array(), array('query'
             array('block_id' => $block->getId()),
             array('query' => array('page_id' => $page->getId()))
         );
+        $deleteUrl = $this->url(
+            'zfcadmin/cms/page/delete_block',
+            array('page_id' => $page->getId(), 'block_id' => $block->getId())
+        );
         ?>
         <tr>
             <td>
                 <a href="<?= $url ?>">
                     <?= get_class($block) ?>
                 </a>
+            </td>
+            <td>
+                <a href="<?= $deleteUrl ?>">Löschen</a>
             </td>
         </tr>
     <?php endforeach ?>
