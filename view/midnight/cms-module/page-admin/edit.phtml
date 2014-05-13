@@ -13,31 +13,5 @@ $this->headLink()->appendStylesheet($this->basePath('css/midnight/cms-module/adm
             <a href="<?= $createBlockUrl ?>">Block hinzufügen&hellip;</a>
         </li>
     </ul>
-    <h2>Blöcke</h2>
-    <ul class="blocks">
-        <?php foreach ($page->getBlocks() as $block): ?>
-            <?php
-            $url = $this->url(
-                'zfcadmin/cms/block/edit',
-                array('block_id' => $block->getId()),
-                array('query' => array('page_id' => $page->getId()))
-            );
-            $deleteUrl = $this->url(
-                'zfcadmin/cms/page/delete_block',
-                array('page_id' => $page->getId(), 'block_id' => $block->getId())
-            );
-            ?>
-            <li>
-                <ul class="options">
-                    <li>
-                        <a href="<?= $url ?>">Bearbeiten</a>
-                    </li>
-                    <li>
-                        <a href="<?= $deleteUrl ?>" class="delete confirm">Löschen</a>
-                    </li>
-                </ul>
-                <?= $this->blockPreview($block) ?>
-            </li>
-        <?php endforeach ?>
-    </ul>
+    <?= $this->render('midnight/cms-module/page-admin/edit/blocks.phtml', array('page' => $page)) ?>
 </div>

@@ -2,7 +2,6 @@
 
 namespace Midnight\CmsModule\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Midnight\CmsModule\Form\PageForm;
 use Midnight\Page\Page;
 use Midnight\Page\PageInterface;
@@ -63,6 +62,29 @@ class PageAdminController extends AbstractCmsController
         $this->getBlockStorage()->delete($block);
         $pageStorage->save($page);
         $this->flashMessenger()->addSuccessMessage('The block was successfully deleted.');
+        return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
+    }
+
+    public function moveBlockAction()
+    {
+        $pageStorage = $this->getPageStorage();
+        $page = $pageStorage->load($this->params()->fromRoute('page_id'));
+        $block = $page->getBlock($this->params()->fromRoute('block_id'));
+
+        $before = $this->params()->fromQuery('before');
+        $after = $this->params()->fromQuery('after');
+        if ($before) {
+            $otherBlockId = $before;
+            $position = PageInterface::BEFORE;
+        } elseif ($after) {
+            $otherBlockId = $after;
+            $position = PageInterface::AFTER;
+        } else {
+            throw new \InvalidArgumentException('Expected "before" or "after" in the query string.');
+        }
+        $otherBlock = $page->getBlock($otherBlockId);
+        $page->moveBlock($block, $otherBlock, $position);
+        $pageStorage->save($page);
         return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
     }
 }
