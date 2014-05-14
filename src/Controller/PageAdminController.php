@@ -5,6 +5,7 @@ namespace Midnight\CmsModule\Controller;
 use Midnight\CmsModule\Form\PageForm;
 use Midnight\Page\Page;
 use Midnight\Page\PageInterface;
+use Zend\Http\Header\Referer;
 use Zend\Http\PhpEnvironment\Request;
 use Zend\View\Model\ViewModel;
 
@@ -62,6 +63,15 @@ class PageAdminController extends AbstractCmsController
         $this->getBlockStorage()->delete($block);
         $pageStorage->save($page);
         $this->flashMessenger()->addSuccessMessage('The block was successfully deleted.');
+
+        $request = $this->getRequest();
+        if ($request instanceof \Zend\Http\Request) {
+            $referer = $request->getHeader('Referer');
+            if ($referer && $referer instanceof Referer) {
+                return $this->redirect()->toUrl((string)$referer->uri());
+            }
+        }
+
         return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
     }
 
@@ -85,6 +95,13 @@ class PageAdminController extends AbstractCmsController
         $otherBlock = $page->getBlock($otherBlockId);
         $page->moveBlock($block, $otherBlock, $position);
         $pageStorage->save($page);
+        $request = $this->getRequest();
+        if ($request instanceof \Zend\Http\Request) {
+            $referer = $request->getHeader('Referer');
+            if ($referer && $referer instanceof Referer) {
+                return $this->redirect()->toUrl((string)$referer->uri());
+            }
+        }
         return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
     }
 }

@@ -1,0 +1,38 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer $this
+ * @var \Midnight\Page\PageInterface    $page
+ * @var \Midnight\Block\BlockInterface  $block
+ * @var \Midnight\Block\BlockInterface  $prevBlock
+ */
+$this->headScript()->appendFile($this->basePath('js/midnight/cms-module/page.js'));
+$editUrl = $this->url(
+    'zfcadmin/cms/block/edit',
+    array('block_id' => $block->getId()),
+    array('query' => array('page_id' => $page->getId()))
+);
+$deleteUrl = $this->url(
+    'zfcadmin/cms/page/delete_block',
+    array('page_id' => $page->getId(), 'block_id' => $block->getId())
+);
+if ($prevBlock) {
+    $upUrl = $this->url(
+        'zfcadmin/cms/page/move_block',
+        array('page_id' => $page->getId(), 'block_id' => $block->getId()),
+        array('query' => array('before' => $prevBlock->getId()))
+    );
+}
+?>
+<ul class="options">
+    <?php if (!empty($upUrl)): ?>
+        <li>
+            <a href="<?= $upUrl ?>">Up</a>
+        </li>
+    <?php endif ?>
+    <li>
+        <a href="<?= $editUrl ?>" class="edit-cms-block">Edit</a>
+    </li>
+    <li>
+        <a href="<?= $deleteUrl ?>" class="delete confirm">Delete</a>
+    </li>
+</ul>

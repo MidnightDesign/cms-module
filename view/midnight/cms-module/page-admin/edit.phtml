@@ -4,13 +4,17 @@
  * @var \Midnight\Page\PageInterface    $page
  */
 $createBlockUrl = $this->url('zfcadmin/cms/block/create', array(), array('query' => array('page_id' => $page->getId())));
+$viewUrl = $this->url('cms_page', array('page_id' => $page->getId()));
 $this->headLink()->appendStylesheet($this->basePath('css/midnight/cms-module/admin/page.css'));
 ?>
 <div class="edit-page">
     <h1><?= $page->getName() ?></h1>
     <ul class="page-options">
         <li>
-            <a href="<?= $createBlockUrl ?>">Block hinzufügen&hellip;</a>
+            <a href="<?= $viewUrl ?>">View page</a>
+        </li>
+        <li>
+            <a href="<?= $createBlockUrl ?>">Add block&hellip;</a>
         </li>
     </ul>
     <?= $this->render('midnight/cms-module/page-admin/edit/blocks.phtml', array('page' => $page)) ?>

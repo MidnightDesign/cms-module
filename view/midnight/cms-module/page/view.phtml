@@ -2,8 +2,11 @@
 /**
  * @var \Zend\View\Renderer\PhpRenderer $this
  * @var \Midnight\Page\PageInterface    $page
+ * @var \Midnight\Block\BlockInterface  $prevBlock
  * @var array                           $blockTypes
  */
+$prevBlock = null;
+$this->headTitle($page->getName());
 ?>
 <?php foreach ($page->getBlocks() as $block): ?>
     <?php
@@ -16,5 +19,8 @@
         continue;
     }
     ?>
-    <?= $this->block($block) ?>
+    <?= $this->block($block, $page) ?>
+    <?php
+    $prevBlock = $block;
+    ?>
 <?php endforeach ?>

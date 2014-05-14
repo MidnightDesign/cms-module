@@ -6,13 +6,18 @@
         @include list-killer;
         border: solid 1px $border-color;
         border-radius: .2em;
+        background-color: white;
         & > li {
             padding: lh(.5);
             border-top: solid 1px $border-color;
             clear: right;
             overflow: hidden;
+            cursor: default;
             &:first-child {
                 border-top: none;
+            }
+            &:hover {
+                background-color: rgba(0, 0, 0, .05);
             }
         }
         ul.options {
@@ -29,6 +34,36 @@
                 &.delete {
                     @include button-danger;
                 }
+            }
+        }
+    }
+}
+
+.midnight-cms-block {
+    outline: dotted 1px transparent;
+    position: relative;
+    &:hover {
+        outline-color: grey;
+        ul.options {
+            display: flex;
+        }
+    }
+    ul.options {
+        @include list-killer;
+        position: absolute;
+        top: lh(.1);
+        right: lh(.1);
+        display: none;
+        padding-left: lh(1);
+        padding-bottom: lh(1);
+        z-index: 10;
+        & > li {
+            margin-left: lh(.5);
+        }
+        a {
+            @include button-small;
+            &.delete {
+                @include button-danger;
             }
         }
     }
