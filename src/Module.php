@@ -2,8 +2,20 @@
 
 namespace Midnight\CmsModule;
 
-class Module
+use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
+
+class Module implements DependencyIndicatorInterface
 {
+    /**
+     * Expected to return an array of modules on which the current one depends on
+     *
+     * @return array
+     */
+    public function getModuleDependencies()
+    {
+        return array('Midnight\Wysiwyg');
+    }
+
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
