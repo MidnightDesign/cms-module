@@ -145,6 +145,8 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'cms.block_type_manager' => 'Midnight\CmsModule\Service\BlockTypeManagerFactory',
+            'cms.page_storage' => 'Midnight\CmsModule\Storage\PageStorageFactory',
+            'cms.block_storage' => 'Midnight\CmsModule\Storage\BlockStorageFactory',
         ),
     ),
     'asset_manager' => array(
@@ -155,6 +157,20 @@ return array(
         ),
     ),
     'cms' => array(
+        'storage' => array(
+            'page' => array(
+                'type' => 'Midnight\Page\Storage\Doctrine',
+                'options' => array(
+                    'object_manager' => 'doctrine.documentmanager.odm_default',
+                ),
+            ),
+            'block' => array(
+                'type' => 'Midnight\Block\Storage\Doctrine',
+                'options' => array(
+                    'object_manager' => 'doctrine.documentmanager.odm_default',
+                ),
+            ),
+        ),
         'blocks' => array(
             'html' => array(
                 'name' => 'Text',
@@ -165,4 +181,19 @@ return array(
             ),
         ),
     ),
+    'doctrine' => array(
+        'driver' => array(
+            __NAMESPACE__ => array(
+                'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver',
+                'cache' => 'array',
+                'paths' => array(dirname(__DIR__) . '/mapping'),
+            ),
+            'odm_default' => array(
+                'drivers' => array(
+                    'Midnight\Page' => __NAMESPACE__,
+                    'Midnight\Block' => __NAMESPACE__,
+                )
+            )
+        )
+    )
 );

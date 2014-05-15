@@ -2,9 +2,7 @@
 
 namespace Midnight\CmsModule\Controller;
 
-use Midnight\Block\Storage\Filesystem as BlockStorage;
 use Midnight\Block\Storage\StorageInterface as BlockStorageInterface;
-use Midnight\Page\Storage\Filesystem as PageStorage;
 use Midnight\Page\Storage\StorageInterface as PageStorageInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 
@@ -15,12 +13,7 @@ abstract class AbstractCmsController extends AbstractActionController
      */
     protected function getPageStorage()
     {
-        $directory = 'data/pages';
-        if (!is_dir($directory)) {
-            mkdir($directory, null, true);
-        }
-        $directory = realpath($directory);
-        return new PageStorage($directory, $this->getBlockStorage());
+        return $this->getServiceLocator()->get('cms.page_storage');
     }
 
     /**
@@ -28,12 +21,7 @@ abstract class AbstractCmsController extends AbstractActionController
      */
     protected function getBlockStorage()
     {
-        $directory = 'data/blocks';
-        if (!is_dir($directory)) {
-            mkdir($directory, null, true);
-        }
-        $directory = realpath($directory);
-        return new BlockStorage($directory);
+        return $this->getServiceLocator()->get('cms.block_storage');
     }
 
     /**
