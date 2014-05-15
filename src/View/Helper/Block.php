@@ -3,10 +3,12 @@
 namespace Midnight\CmsModule\View\Helper;
 
 use Midnight\Block\BlockInterface;
+use Midnight\CmsModule\InlineBlockOption\OptionInterface;
 use Midnight\CmsModule\Service\BlockTypeManagerInterface;
 use Midnight\Page\PageInterface;
 use Zend\View\Helper\AbstractHelper;
 use Zend\View\Helper\HelperInterface;
+use Zend\View\Helper\Partial;
 
 class Block extends AbstractHelper
 {
@@ -42,22 +44,17 @@ class Block extends AbstractHelper
             ->appendFile($basePath('js/midnight/cms-module/page.js'))
             ->appendFile($basePath('js/admin-module/ui.js'));
 
-        $prevBlock = null;
-        foreach ($page->getBlocks() as $b) {
-            if ($b === $block) {
-                break;
-            }
-            $prevBlock = $b;
-        }
-
-        $options = $this->getView()->partial('midnight/cms-module/page-admin/edit/block-options.phtml', array(
-            'block' => $block,
-            'page' => $page,
-            'prevBlock' => $prevBlock,
-        ));
+        /** @var $partial Partial */
+        $partial = $this->getView()->plugin('partial');
+        $options = $partial(
+            'midnight/cms-module/page-admin/edit/block-options.phtml',
+            array('options' => $this->getInlineOptionsFor($block, $page))
+        );
 
         $renderer = $this->getRendererFor($block);
-        return '<div class="midnight-cms-block">' . $options . $renderer($block) . '</div>';
+
+        $containerClass = $this->typeManager->getInlineContainerClassFor($block);
+        return '<div class="midnight-cms-block ' . $containerClass . '">' . $options . $renderer($block) . '</div>';
     }
 
     /**
@@ -69,5 +66,16 @@ class Block extends AbstractHelper
     {
         $rendererKey = $this->typeManager->getRendererFor($block);
         return $this->getView()->plugin($rendererKey);
+    }
+
+    /**
+     * @param BlockInterface $block
+     * @param PageInterface  $page
+     *
+     * @return OptionInterface[]
+     */
+    private function getInlineOptionsFor(BlockInterface $block, PageInterface $page)
+    {
+        return $this->typeManager->getInlineOptionsProviderFor($block)->getOptions($block, $page);
     }
 } 

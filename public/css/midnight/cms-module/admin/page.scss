@@ -40,13 +40,26 @@
 }
 
 .midnight-cms-block {
-    outline: dotted 1px transparent;
     position: relative;
-    &:hover {
-        outline-color: grey;
+    background-color: rgba(0, 0, 0, .1);
+    outline-offset: .2em;
+    &, * {
+        cursor: default;
+    }
+    &.active {
+        background-color: transparent;
+        &:hover {
+            outline: none;
+        }
+        &, * {
+            cursor: inherit;
+        }
         ul.options {
             display: flex;
         }
+    }
+    &:hover {
+        outline: solid 3px rgba(0, 0, 0, .1);
     }
     ul.options {
         @include list-killer;
@@ -54,9 +67,8 @@
         top: lh(.1);
         right: lh(.1);
         display: none;
-        padding-left: lh(1);
-        padding-bottom: lh(1);
         z-index: 10;
+        padding: 0;
         & > li {
             margin-left: lh(.5);
         }

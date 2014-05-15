@@ -10,13 +10,13 @@ $prevBlock = null;
     <?php foreach ($page->getBlocks() as $block): ?>
         <li>
             <?php
-            $options = $this->partial('midnight/cms-module/page-admin/edit/block-options.phtml', array(
-                'block' => $block,
-                'page' => $page,
-                'prevBlock' => $prevBlock,
-            ));
+//            $options = $this->partial('midnight/cms-module/page-admin/edit/block-options.phtml', array(
+//                'block' => $block,
+//                'page' => $page,
+//                'prevBlock' => $prevBlock,
+//            ));
             ?>
-            <?= $options ?>
+<!--            --><?//= $options ?>
             <?= $this->blockPreview($block) ?>
             <?php
             $prevBlock = $block;
