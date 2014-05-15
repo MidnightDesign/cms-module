@@ -1,8 +1,9 @@
 <?php
 /**
- * @var \Zend\View\Renderer\PhpRenderer $this
- * @var \Midnight\Page\PageInterface    $page
- * @var \Midnight\Block\BlockInterface  $prevBlock
+ * @var \Zend\View\Renderer\PhpRenderer                       $this
+ * @var \Midnight\Page\PageInterface                          $page
+ * @var \Midnight\Block\BlockInterface                        $prevBlock
+ * @var \Midnight\CmsModule\Service\BlockTypeManagerInterface $typeManager
  */
 $prevBlock = null;
 ?>
@@ -10,13 +11,9 @@ $prevBlock = null;
     <?php foreach ($page->getBlocks() as $block): ?>
         <li>
             <?php
-//            $options = $this->partial('midnight/cms-module/page-admin/edit/block-options.phtml', array(
-//                'block' => $block,
-//                'page' => $page,
-//                'prevBlock' => $prevBlock,
-//            ));
+            $opt = $typeManager->getInlineOptionsProviderFor($block)->getOptions($block, $page);
             ?>
-<!--            --><?//= $options ?>
+            <?= $this->partial('midnight/cms-module/page-admin/edit/block-options.phtml', array('options' => $opt)) ?>
             <?= $this->blockPreview($block) ?>
             <?php
             $prevBlock = $block;

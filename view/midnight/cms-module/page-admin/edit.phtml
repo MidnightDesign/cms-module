@@ -1,7 +1,8 @@
 <?php
 /**
- * @var \Zend\View\Renderer\PhpRenderer $this
- * @var \Midnight\Page\PageInterface    $page
+ * @var \Zend\View\Renderer\PhpRenderer                       $this
+ * @var \Midnight\Page\PageInterface                          $page
+ * @var \Midnight\CmsModule\Service\BlockTypeManagerInterface $blockTypeManager
  */
 $createBlockUrl = $this->url('zfcadmin/cms/block/create', array(), array('query' => array('page_id' => $page->getId())));
 $viewUrl = $this->url('cms_page', array('page_id' => $page->getId()));
@@ -17,5 +18,5 @@ $this->headLink()->appendStylesheet($this->basePath('css/midnight/cms-module/adm
             <a href="<?= $createBlockUrl ?>">Add block&hellip;</a>
         </li>
     </ul>
-    <?= $this->render('midnight/cms-module/page-admin/edit/blocks.phtml', array('page' => $page)) ?>
+    <?= $this->render('midnight/cms-module/page-admin/edit/blocks.phtml', array('page' => $page, 'typeManager' => $blockTypeManager)) ?>
 </div>

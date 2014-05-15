@@ -3,6 +3,7 @@
 namespace Midnight\CmsModule\Controller;
 
 use Midnight\CmsModule\Form\PageForm;
+use Midnight\CmsModule\Service\BlockTypeManagerInterface;
 use Midnight\Page\Page;
 use Midnight\Page\PageInterface;
 use Zend\Http\Header\Referer;
@@ -48,8 +49,9 @@ class PageAdminController extends AbstractCmsController
     {
         $page = $this->getPageStorage()->load($this->params()->fromRoute('page_id'));
         $blockTypes = $this->getBlockTypes();
+        $blockTypeManager = $this->getBlockTypeManager();
 
-        $vm = new ViewModel(array('page' => $page, 'blockTypes' => $blockTypes));
+        $vm = new ViewModel(array('page' => $page, 'blockTypes' => $blockTypes, 'blockTypeManager' => $blockTypeManager));
         $vm->setTemplate('midnight/cms-module/page-admin/edit.phtml');
         return $vm;
     }
@@ -103,5 +105,13 @@ class PageAdminController extends AbstractCmsController
             }
         }
         return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
+    }
+
+    /**
+     * @return BlockTypeManagerInterface
+     */
+    private function getBlockTypeManager()
+    {
+        return $this->getServiceLocator()->get('cms.block_type_manager');
     }
 }
