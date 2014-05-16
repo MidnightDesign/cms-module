@@ -1,0 +1,23 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer                        $this
+ * @var \Midnight\CmsModule\Menu\MenuInterface                 $menu
+ * @var \Midnight\CmsModule\Menu\Item\Type\ItemTypeInterface[] $types
+ */
+?>
+<h1>New menu entry</h1>
+<ul>
+    <?php foreach ($types as $type): ?>
+        <?php
+        $url = $this->url(
+            'zfcadmin/cms/menu/create_item',
+            array('menu_id' => $menu->getId(), 'item_type' => $type->getKey())
+        );
+        ?>
+        <li>
+            <a href="<?= $url ?>">
+                <?= $type->getName() ?>
+            </a>
+        </li>
+    <?php endforeach ?>
+</ul>

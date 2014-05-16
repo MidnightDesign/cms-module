@@ -2,114 +2,13 @@
 
 namespace Midnight\CmsModule;
 
+$routes = include __DIR__ . '/routes.config.php';
+$cms = include __DIR__ . '/cms.config.php';
+
 return array(
+    'cms' => $cms,
     'router' => array(
-        'routes' => array(
-            'cms_page' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/:page_id',
-                    'defaults' => array(
-                        'controller' => __NAMESPACE__ . 'Page',
-                        'action' => 'view',
-                    ),
-                ),
-            ),
-            'zfcadmin' => array(
-                'child_routes' => array(
-                    'cms' => array(
-                        'type' => 'Literal',
-                        'options' => array(
-                            'route' => '/cms',
-                            'defaults' => array(
-                                'controller' => __NAMESPACE__ . 'PageAdmin',
-                            ),
-                        ),
-                        'may_terminate' => true,
-                        'child_routes' => array(
-                            'page' => array(
-                                'type' => 'Literal',
-                                'options' => array(
-                                    'route' => '/pages',
-                                    'defaults' => array(
-                                        'controller' => __NAMESPACE__ . 'PageAdmin',
-                                        'action' => 'index',
-                                    ),
-                                ),
-                                'may_terminate' => true,
-                                'child_routes' => array(
-                                    'create' => array(
-                                        'type' => 'Literal',
-                                        'options' => array(
-                                            'route' => '/create',
-                                            'defaults' => array('action' => 'create'),
-                                        ),
-                                    ),
-                                    'edit' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/:page_id/edit',
-                                            'defaults' => array('action' => 'edit'),
-                                        ),
-                                    ),
-                                    'delete_block' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/delete-block/:page_id/:block_id',
-                                            'defaults' => array('action' => 'delete-block'),
-                                        ),
-                                    ),
-                                    'move_block' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/move-block/:page_id/:block_id',
-                                            'defaults' => array('action' => 'move-block'),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                            'block' => array(
-                                'type' => 'Literal',
-                                'options' => array(
-                                    'route' => '/blocks',
-                                    'defaults' => array(
-                                        'controller' => __NAMESPACE__ . 'BlockAdmin',
-                                        'action' => 'index',
-                                    ),
-                                ),
-                                'may_terminate' => true,
-                                'child_routes' => array(
-                                    'create' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/create[/:block_type]',
-                                            'defaults' => array('action' => 'create'),
-                                        ),
-                                    ),
-                                    'edit' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/edit/:block_id',
-                                            'defaults' => array('action' => 'edit'),
-                                        ),
-                                    ),
-                                    'set_html' => array(
-                                        'type' => 'Segment',
-                                        'options' => array(
-                                            'route' => '/set-html/:block_id',
-                                            'defaults' => array(
-                                                'controller' => __NAMESPACE__ . 'Block\Html',
-                                                'action' => 'set-html',
-                                            ),
-                                        ),
-                                    )
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
+        'routes' => $routes,
     ),
     'controllers' => array(
         'invokables' => array(
@@ -117,13 +16,19 @@ return array(
             __NAMESPACE__ . 'PageAdmin' => __NAMESPACE__ . '\Controller\PageAdminController',
             __NAMESPACE__ . 'BlockAdmin' => __NAMESPACE__ . '\Controller\BlockAdminController',
             __NAMESPACE__ . 'Block\Html' => __NAMESPACE__ . '\Controller\Block\HtmlController',
+            __NAMESPACE__ . '\MenuAdmin' => __NAMESPACE__ . '\Menu\Controller\MenuAdminController',
+            __NAMESPACE__ . '\Menu\Controller\Item\Page' => __NAMESPACE__ . '\Menu\Controller\Item\PageController',
         ),
     ),
     'navigation' => array(
         'admin' => array(
             array(
-                'label' => 'Seiten',
+                'label' => 'Pages',
                 'route' => 'zfcadmin/cms',
+            ),
+            array(
+                'label' => 'Menu',
+                'route' => 'zfcadmin/cms/menu',
             ),
         ),
     ),
@@ -147,37 +52,14 @@ return array(
             'cms.block_type_manager' => 'Midnight\CmsModule\Service\BlockTypeManagerFactory',
             'cms.page_storage' => 'Midnight\CmsModule\Storage\PageStorageFactory',
             'cms.block_storage' => 'Midnight\CmsModule\Storage\BlockStorageFactory',
+            'cms.menu.storage' => 'Midnight\CmsModule\Menu\Storage\StorageFactory',
+            'cms.menu.item_type_manager' => 'Midnight\CmsModule\Menu\Item\Type\ItemTypeManagerFactory',
         ),
     ),
     'asset_manager' => array(
         'resolver_configs' => array(
             'paths' => array(
                 dirname(__DIR__) . '/public',
-            ),
-        ),
-    ),
-    'cms' => array(
-        'storage' => array(
-            'page' => array(
-                'type' => 'Midnight\Page\Storage\Doctrine',
-                'options' => array(
-                    'object_manager' => 'doctrine.documentmanager.odm_default',
-                ),
-            ),
-            'block' => array(
-                'type' => 'Midnight\Block\Storage\Doctrine',
-                'options' => array(
-                    'object_manager' => 'doctrine.documentmanager.odm_default',
-                ),
-            ),
-        ),
-        'blocks' => array(
-            'html' => array(
-                'name' => 'Text',
-                'class' => 'Midnight\Block\Html',
-                'controller' => __NAMESPACE__ . 'Block\Html',
-                'renderer' => 'htmlBlock',
-                'preview_renderer' => 'htmlBlockPreview',
             ),
         ),
     ),

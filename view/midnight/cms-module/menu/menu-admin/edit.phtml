@@ -1,0 +1,43 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer        $this
+ * @var \Midnight\CmsModule\Menu\MenuInterface $menu
+ */
+?>
+<h1>Edit menu</h1>
+<ul class="page-options">
+    <li>
+        <a href="<?= $this->url('zfcadmin/cms/menu/create_item', array('menu_id' => $menu->getId())) ?>">
+            Create new entry&hellip;
+        </a>
+    </li>
+</ul>
+<table>
+    <thead>
+    <tr>
+        <th>Label</th>
+        <th>URL</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    $i = 0;
+    ?>
+    <?php foreach ($menu->getItems() as $item): ?>
+        <?php
+        $deleteUrl = $this->url(
+            'zfcadmin/cms/menu/delete_item',
+            array('menu_id' => $menu->getId(), 'path' => (string)$i)
+        );
+        ?>
+        <tr>
+            <td><?= $item->getLabel() ?></td>
+            <td><?= $item->getHref() ?></td>
+            <td><a href="<?= $deleteUrl ?>">Delete</a></td>
+        </tr>
+        <?php
+        $i += 1;
+        ?>
+    <?php endforeach ?>
+    </tbody>
+</table>

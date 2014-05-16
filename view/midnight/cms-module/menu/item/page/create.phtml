@@ -1,0 +1,9 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer                 $this
+ * @var \Midnight\CmsModule\Menu\Item\Page\PageItemForm $form
+ */
+$form->setAttribute('class', $form->getAttribute('class') . ' labels-top');
+?>
+<h1>Create CMS page menu item</h1>
+<?= $this->adminForm($form) ?>
