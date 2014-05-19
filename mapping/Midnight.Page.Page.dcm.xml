@@ -7,6 +7,7 @@
     <document name="Midnight\Page\Page" collection="pages">
         <field name="id" id="true"/>
         <field name="name" type="string"/>
+        <field name="slug" type="string" unique="true"/>
         <reference-many field="blocks">
             <cascade>
                 <persist/>

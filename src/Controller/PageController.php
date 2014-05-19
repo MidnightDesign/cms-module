@@ -12,7 +12,7 @@ class PageController extends AbstractCmsController
 {
     public function viewAction()
     {
-        $page = $this->getPageStorage()->load($this->params()->fromRoute('page_id'));
+        $page = $this->getPageStorage()->loadBySlug($this->params()->fromRoute('slug'));
         $blockTypes = $this->getBlockTypes();
 
         $vm = new ViewModel(array('page' => $page, 'blockTypes' => $blockTypes));

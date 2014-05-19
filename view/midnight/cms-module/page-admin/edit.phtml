@@ -5,7 +5,7 @@
  * @var \Midnight\CmsModule\Service\BlockTypeManagerInterface $blockTypeManager
  */
 $createBlockUrl = $this->url('zfcadmin/cms/block/create', array(), array('query' => array('page_id' => $page->getId())));
-$viewUrl = $this->url('cms_page', array('page_id' => $page->getId()));
+$viewUrl = $this->url('cms_page', array('slug' => $page->getSlug()));
 $this->headLink()->appendStylesheet($this->basePath('css/midnight/cms-module/admin/page.css'));
 ?>
 <div class="edit-page">

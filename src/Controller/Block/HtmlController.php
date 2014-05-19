@@ -37,7 +37,7 @@ class HtmlController extends AbstractCmsController implements BlockControllerInt
         if (!$page) {
             throw new \RuntimeException('Didn\'t get a page.');
         }
-        return $this->redirect()->toRoute('cms_page', array('page_id' => $page->getId()));
+        return $this->redirect()->toRoute('cms_page', array('slug' => $page->getSlug()));
     }
 
     public function setHtmlAction()

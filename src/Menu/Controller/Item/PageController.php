@@ -37,7 +37,7 @@ class PageController extends AbstractMenuController implements ItemControllerInt
                 $item = new Item();
                 $page = $this->getPageStorage()->load($data['page_id']);
                 $item->setLabel($page->getName());
-                $item->setHref($this->url()->fromRoute('cms_page', array('page_id' => $page->getId())));
+                $item->setHref($this->url()->fromRoute('cms_page', array('slug' => $page->getSlug())));
                 if (!empty($data['path'])) {
                     $path = explode('-', $data['path']);
                 } else {
