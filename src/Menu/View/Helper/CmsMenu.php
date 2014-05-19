@@ -14,6 +14,7 @@ use Zend\View\Helper\Navigation\Menu;
 
 class CmsMenu extends AbstractHelper
 {
+    const DEFAULT_MENU = 'default';
     /**
      * @var string
      */
@@ -49,15 +50,15 @@ class CmsMenu extends AbstractHelper
 
     /**
      * @param string|null $menuId
+     *
+     * @return CmsMenu|string $this
      */
     public function __invoke($menuId = null)
     {
-        $menu = $this->getMenu($menuId);
-        $navigation = new Navigation();
-        foreach ($menu->getItems() as $item) {
-            $navigation->addPage($this->getPage($item));
-
+        if (null === $menuId) {
+            return $this;
         }
+        $navigation = $this->getNavigation($menuId);
         return $this->getNavigationHelper()->menu()->render($navigation);
     }
 
@@ -68,7 +69,7 @@ class CmsMenu extends AbstractHelper
      */
     private function getMenu($menuId)
     {
-        if (null === $menuId) {
+        if (self::DEFAULT_MENU === $menuId) {
             $menuId = $this->getDefaultMenuId();
         }
         return $this->getStorage()->load($menuId);
@@ -125,14 +126,6 @@ class CmsMenu extends AbstractHelper
     }
 
     /**
-     * @return Request
-     */
-    private function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
      * @param Request $request
      */
     public function setRequest($request)
@@ -146,5 +139,21 @@ class CmsMenu extends AbstractHelper
     public function setDefaultMenuId($defaultMenuId)
     {
         $this->defaultMenuId = $defaultMenuId;
+    }
+
+    /**
+     * @param $menuId
+     *
+     * @return Navigation
+     */
+    public function getNavigation($menuId = self::DEFAULT_MENU)
+    {
+        $menu = $this->getMenu($menuId);
+        $navigation = new Navigation();
+        foreach ($menu->getItems() as $item) {
+            $navigation->addPage($this->getPage($item));
+
+        }
+        return $navigation;
     }
 } 
