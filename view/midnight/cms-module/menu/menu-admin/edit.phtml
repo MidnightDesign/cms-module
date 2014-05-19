@@ -2,6 +2,7 @@
 /**
  * @var \Zend\View\Renderer\PhpRenderer        $this
  * @var \Midnight\CmsModule\Menu\MenuInterface $menu
+ * @var integer                                $maxDepth
  */
 ?>
 <h1>Edit menu</h1>
@@ -12,36 +13,36 @@
         </a>
     </li>
 </ul>
-<table>
-    <thead>
-    <tr>
-        <th>Label</th>
-        <th>URL</th>
-    </tr>
-    </thead>
-    <tbody>
+<ul>
     <?php
-    $i = 0;
+    $itemPartial = 'midnight/cms-module/menu/menu-admin/edit/item.phtml';
+    $index = 0;
     ?>
     <?php foreach ($menu->getItems() as $item): ?>
         <?php
-        $deleteUrl = $this->url(
-            'zfcadmin/cms/menu/delete_item',
-            array('menu_id' => $menu->getId(), 'path' => (string)$i)
+        $params = array(
+            'menu' => $menu,
+            'item' => $item,
+            'path' => array($index),
+            'level' => 0,
+            'maxDepth' => $maxDepth
         );
         ?>
-        <tr>
-            <td><?= $item->getLabel() ?></td>
-            <td>
-                <a href="<?= $item->getHref() ?>">
-                    <?= $item->getHref() ?>
-                </a>
-            </td>
-            <td><a href="<?= $deleteUrl ?>">Delete</a></td>
-        </tr>
+        <?= $this->partial($itemPartial, $params) ?>
         <?php
-        $i += 1;
+        $index += 1;
         ?>
     <?php endforeach ?>
-    </tbody>
-</table>
+    <li>
+        <?php
+        $createUrl = $this->url(
+            'zfcadmin/cms/menu/create_item',
+            array('menu_id' => $menu->getId()),
+            array('query' => array('path' => (string)$index))
+        );
+        ?>
+        <a href="<?= $createUrl ?>">
+            Create new item&hellip;
+        </a>
+    </li>
+</ul>

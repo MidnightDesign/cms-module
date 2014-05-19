@@ -34,6 +34,11 @@ class PageItemForm extends Form
         ));
 
         $this->add(array(
+            'type' => 'Hidden',
+            'name' => 'path',
+        ));
+
+        $this->add(array(
             'type' => 'Submit',
             'name' => 'submit',
             'attributes' => array(

@@ -5,6 +5,7 @@ namespace Midnight\CmsModule\Menu\View\Helper;
 use Midnight\CmsModule\Menu\Item\ItemInterface;
 use Midnight\CmsModule\Menu\MenuInterface;
 use Midnight\CmsModule\Menu\Storage\StorageInterface;
+use Zend\Http\PhpEnvironment\Request;
 use Zend\Navigation\Navigation;
 use Zend\Navigation\Page\AbstractPage;
 use Zend\Navigation\Page\Uri;
@@ -25,6 +26,10 @@ class CmsMenu extends AbstractHelper
      * @var \Zend\View\Helper\Navigation
      */
     private $navigationHelper;
+    /**
+     * @var Request
+     */
+    private $request;
 
     /**
      * @param Menu $menuPlugin
@@ -51,6 +56,7 @@ class CmsMenu extends AbstractHelper
         $navigation = new Navigation();
         foreach ($menu->getItems() as $item) {
             $navigation->addPage($this->getPage($item));
+
         }
         return $this->getNavigationHelper()->menu()->render($navigation);
     }
@@ -98,6 +104,15 @@ class CmsMenu extends AbstractHelper
         $page = new Uri();
         $page->setLabel($item->getLabel());
         $page->setUri($item->getHref());
+        $children = $item->getItems();
+        if ($this->request->getRequestUri() === $item->getHref()) {
+            $page->setActive();
+        }
+        if (!empty($children)) {
+            foreach ($children as $child) {
+                $page->addPage($this->getPage($child));
+            }
+        }
         return $page;
     }
 
@@ -107,6 +122,22 @@ class CmsMenu extends AbstractHelper
     private function getNavigationHelper()
     {
         return $this->navigationHelper;
+    }
+
+    /**
+     * @return Request
+     */
+    private function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
     }
 
     /**

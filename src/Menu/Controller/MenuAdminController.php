@@ -19,7 +19,10 @@ class MenuAdminController extends AbstractMenuController
         $menuId = $this->params()->fromRoute('menu_id');
         $menu = $this->getMenuStorage()->load($menuId);
 
-        $vm = new ViewModel(array('menu' => $menu));
+        $config = $this->getServiceLocator()->get('Config');
+        $maxDepth = $config['cms']['menu']['max_depth'];
+
+        $vm = new ViewModel(array('menu' => $menu, 'maxDepth' => $maxDepth));
         $vm->setTemplate('midnight/cms-module/menu/menu-admin/edit.phtml');
         return $vm;
     }
@@ -56,7 +59,7 @@ class MenuAdminController extends AbstractMenuController
         $path = $this->params()->fromRoute('path');
         $menuStorage = $this->getMenuStorage();
         $menu = $menuStorage->load($menuId);
-        $menu->deleteItemByPath(explode('/', $path));
+        $menu->deleteItemByPath(explode('-', $path));
         $menuStorage->save($menu);
         return $this->redirect()->toRoute('zfcadmin/cms/menu/edit', array('menu_id' => $menu->getId()));
     }

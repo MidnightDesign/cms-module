@@ -4,7 +4,7 @@ namespace Midnight\CmsModule\Menu;
 
 use Midnight\CmsModule\Menu\Item\ItemInterface;
 
-abstract class AbstractItemContainer
+abstract class AbstractItemContainer implements ItemContainerInterface
 {
     /**
      * @var ItemContainerInterface[]
@@ -29,12 +29,21 @@ abstract class AbstractItemContainer
 
     /**
      * @param ItemInterface $item
+     * @param array         $path
      *
      * @return void
      */
-    public function addItem(ItemInterface $item)
+    public function addItem(ItemInterface $item, array $path = null)
     {
-        $this->items[] = $item;
+        if (null === $path) {
+            $path = array(count($this->getItems()));
+        }
+        if (count($path) === 1) {
+            array_splice($this->items, $path[0], 0, array($item));
+        } else {
+            $index = (integer)array_shift($path);
+            $this->items[$index]->addItem($item, $path);
+        }
         $this->ensureNumericKeys();
     }
 

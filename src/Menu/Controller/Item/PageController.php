@@ -24,6 +24,11 @@ class PageController extends AbstractMenuController implements ItemControllerInt
         $menu = $this->params()->fromRoute('menu');
         $form = new PageItemForm($this->getPageStorage(), $menu);
 
+        $path = $this->params()->fromQuery('path');
+        if ($path) {
+            $form->get('path')->setValue($path);
+        }
+
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $request->getPost();
@@ -33,7 +38,12 @@ class PageController extends AbstractMenuController implements ItemControllerInt
                 $page = $this->getPageStorage()->load($data['page_id']);
                 $item->setLabel($page->getName());
                 $item->setHref($this->url()->fromRoute('cms_page', array('page_id' => $page->getId())));
-                $menu->addItem($item);
+                if (!empty($data['path'])) {
+                    $path = explode('-', $data['path']);
+                } else {
+                    $path = array(count($menu->getItems()));
+                }
+                $menu->addItem($item, $path);
                 $this->getMenuStorage()->save($menu);
                 return $this->redirect()->toRoute('zfcadmin/cms/menu/edit', array('menu_id' => $menu->getId()));
             }

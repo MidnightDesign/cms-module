@@ -30,6 +30,7 @@ class CmsMenuFactory implements FactoryInterface
         $helper->setStorage($storage);
 
         $helper->setNavigationHelper($serviceLocator->get('navigation'));
+        $helper->setRequest($sl->get('Request'));
 
         return $helper;
     }

@@ -1,0 +1,59 @@
+<?php
+/**
+ * @var \Zend\View\Renderer\PhpRenderer             $this
+ * @var \Midnight\CmsModule\Menu\MenuInterface      $menu
+ * @var \Midnight\CmsModule\Menu\Item\ItemInterface $item
+ * @var array                                       $path
+ * @var integer                                     $level
+ * @var integer                                     $maxDepth
+ */
+$deleteUrl = $this->url(
+    'zfcadmin/cms/menu/delete_item',
+    array('menu_id' => $menu->getId(), 'path' => join('-', $path))
+);
+$children = $item->getItems();
+?>
+<li>
+    <?= $item->getLabel() ?>
+    <a href="<?= $deleteUrl ?>">Delete</a>
+    <ul>
+        <?php
+        $childIndex = 0;
+        $itemPartial = 'midnight/cms-module/menu/menu-admin/edit/item.phtml';
+        $childPath = $path;
+        $childPath[] = 0;
+        ?>
+        <?php foreach ($children as $child): ?>
+            <?php
+            $childPath[count($childPath) - 1] = $childIndex;
+            $params = array(
+                'menu' => $menu,
+                'item' => $child,
+                'path' => $childPath,
+                'level' => $level + 1,
+                'maxDepth' => $maxDepth
+            );
+            ?>
+            <?= $this->partial($itemPartial, $params) ?>
+            <?php
+            $childIndex += 1;
+            ?>
+        <?php endforeach ?>
+        <?php if ($level + 1 < $maxDepth): ?>
+            <li>
+                <?php
+                $childPath = $path;
+                $childPath[] = $childIndex;
+                $createUrl = $this->url(
+                    'zfcadmin/cms/menu/create_item',
+                    array('menu_id' => $menu->getId()),
+                    array('query' => array('path' => join('-', $childPath)))
+                );
+                ?>
+                <a href="<?= $createUrl ?>">
+                    Create new item&hellip;
+                </a>
+            </li>
+        <?php endif ?>
+    </ul>
+</li>

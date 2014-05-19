@@ -12,13 +12,6 @@ interface MenuInterface extends ItemContainerInterface
     public function getId();
 
     /**
-     * @param ItemInterface $item
-     *
-     * @return void
-     */
-    public function addItem(ItemInterface $item);
-
-    /**
      * @return ItemInterface[]
      */
     public function getItems();

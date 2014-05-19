@@ -2,8 +2,6 @@
 
 namespace Midnight\CmsModule\Menu;
 
-use Midnight\CmsModule\Menu\Item\ItemInterface;
-
 class Menu extends AbstractItemContainer implements MenuInterface
 {
     /**
