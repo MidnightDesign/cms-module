@@ -56,6 +56,17 @@ class PageAdminController extends AbstractCmsController
         return $vm;
     }
 
+    public function deleteAction()
+    {
+        $storage = $this->getPageStorage();
+        $page = $storage->load($this->params()->fromRoute('page_id'));
+        $storage->delete($page);
+
+        $this->flashMessenger()->addSuccessMessage('The page was successfully deleted.');
+
+        return $this->redirect()->toRoute('zfcadmin/cms/page');
+    }
+
     public function deleteBlockAction()
     {
         $pageStorage = $this->getPageStorage();

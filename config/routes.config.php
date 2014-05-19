@@ -64,6 +64,13 @@ return array(
                                     'defaults' => array('action' => 'move-block'),
                                 ),
                             ),
+                            'delete' => array(
+                                'type' => 'Segment',
+                                'options' => array(
+                                    'route' => '/:page_id/delete',
+                                    'defaults' => array('action' => 'delete'),
+                                ),
+                            ),
                         ),
                     ),
                     'block' => array(
