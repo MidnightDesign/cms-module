@@ -32,7 +32,11 @@
         ?>
         <tr>
             <td><?= $item->getLabel() ?></td>
-            <td><?= $item->getHref() ?></td>
+            <td>
+                <a href="<?= $item->getHref() ?>">
+                    <?= $item->getHref() ?>
+                </a>
+            </td>
             <td><a href="<?= $deleteUrl ?>">Delete</a></td>
         </tr>
         <?php

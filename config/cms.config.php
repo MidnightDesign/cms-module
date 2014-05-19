@@ -27,6 +27,7 @@ return array(
         ),
     ),
     'menu' => array(
+        'default_menu_id' => 'default',
         'storage' => array(
             'type' => 'Midnight\CmsModule\Menu\Storage\JsonStorage',
             'options' => array(

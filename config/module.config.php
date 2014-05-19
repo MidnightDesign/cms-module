@@ -42,6 +42,7 @@ return array(
             'block' => 'Midnight\CmsModule\View\Helper\BlockFactory',
             'blockPreview' => 'Midnight\CmsModule\View\Helper\BlockPreviewFactory',
             'htmlBlock' => 'Midnight\CmsModule\View\Helper\HtmlBlockFactory',
+            'cmsMenu' => 'Midnight\CmsModule\Menu\View\Helper\CmsMenuFactory',
         ),
         'invokables' => array(
             'htmlBlockPreview' => 'Midnight\CmsModule\View\Helper\HtmlBlockPreview',

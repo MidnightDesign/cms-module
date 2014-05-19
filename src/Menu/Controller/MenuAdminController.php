@@ -75,7 +75,8 @@ class MenuAdminController extends AbstractMenuController
 
     private function getDefaultMenuId()
     {
-        return 'default';
+        $config = $this->getServiceLocator()->get('Config');
+        return $config['cms']['menu']['default_menu_id'];
     }
 
     /**
