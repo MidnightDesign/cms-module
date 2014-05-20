@@ -1,6 +1,5 @@
 {
     "name": "midnight/cms-module",
-    "minimum-stability": "stable",
     "require": {
         "php": ">=5.3.3",
         "rwoverdijk/assetmanager": "~1.3",
