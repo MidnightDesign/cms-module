@@ -6,7 +6,7 @@ return array(
     'cms_page' => array(
         'type' => 'Segment',
         'options' => array(
-            'route' => '/:slug',
+            'route' => '/p/:slug',
             'defaults' => array(
                 'controller' => __NAMESPACE__ . 'Page',
                 'action' => 'view',
