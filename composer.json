@@ -7,7 +7,7 @@
         "midnight/admin-module": "dev-master",
         "midnight/page": "dev-master",
         "midnight/wysiwyg-module": "dev-master",
-        "zf-commons/zfc-rbac": "~1.0"
+        "zf-commons/zfc-rbac": "~2.3"
     },
     "autoload": {
         "psr-4": {
