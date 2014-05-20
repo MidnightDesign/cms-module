@@ -51,6 +51,7 @@ class HtmlController extends AbstractCmsController implements BlockControllerInt
                 $block->getId()
             ));
         }
+        $this->checkPermission('cms.block.html.edit', $block);
         $block->setHtml($this->params()->fromPost('html'));
         $storageInterface->save($block);
         return $this->getResponse();

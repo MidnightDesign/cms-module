@@ -43,6 +43,7 @@ return array(
             'blockPreview' => 'Midnight\CmsModule\View\Helper\BlockPreviewFactory',
             'htmlBlock' => 'Midnight\CmsModule\View\Helper\HtmlBlockFactory',
             'cmsMenu' => 'Midnight\CmsModule\Menu\View\Helper\CmsMenuFactory',
+            'page' => 'Midnight\CmsModule\View\Helper\PageFactory',
         ),
         'invokables' => array(
             'htmlBlockPreview' => 'Midnight\CmsModule\View\Helper\HtmlBlockPreview',
@@ -75,8 +76,21 @@ return array(
                 'drivers' => array(
                     'Midnight\Page' => __NAMESPACE__,
                     'Midnight\Block' => __NAMESPACE__,
-                )
-            )
-        )
-    )
+                ),
+            ),
+        ),
+    ),
+    'zfc_rbac' => array(
+        'role_provider' => array(
+            'ZfcRbac\Role\InMemoryRoleProvider' => array(
+                'admin' => array(
+                    'permissions' => array(
+                        'cms.block.edit',
+                        'cms.block.html.edit',
+                        'cms.page.add_block',
+                    ),
+                ),
+            ),
+        ),
+    ),
 );

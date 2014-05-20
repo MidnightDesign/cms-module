@@ -4,6 +4,7 @@ namespace Midnight\CmsModule\View\Helper;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationServiceInterface;
 
 class HtmlBlockFactory implements FactoryInterface
 {
@@ -17,7 +18,20 @@ class HtmlBlockFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $htmlBlock = new HtmlBlock();
-        $htmlBlock->setEditable(true);
+        $authService = $this->getAuthorizationService($serviceLocator);
+        if ($authService->isGranted('cms.block.html.edit', $htmlBlock)) {
+            $htmlBlock->setEditable(true);
+        }
         return $htmlBlock;
+    }
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return AuthorizationServiceInterface
+     */
+    private function getAuthorizationService(ServiceLocatorInterface $serviceLocator)
+    {
+        return $serviceLocator->getServiceLocator()->get('ZfcRbac\Service\AuthorizationService');
     }
 }

@@ -2,25 +2,6 @@
 /**
  * @var \Zend\View\Renderer\PhpRenderer $this
  * @var \Midnight\Page\PageInterface    $page
- * @var \Midnight\Block\BlockInterface  $prevBlock
- * @var array                           $blockTypes
  */
-$prevBlock = null;
-$this->headTitle($page->getName());
 ?>
-<?php foreach ($page->getBlocks() as $block): ?>
-    <?php
-    foreach ($blockTypes as $type) {
-        if ($block instanceof $type['class']) {
-            break;
-        }
-    }
-    if (empty($type)) {
-        continue;
-    }
-    ?>
-    <?= $this->block($block, $page) ?>
-    <?php
-    $prevBlock = $block;
-    ?>
-<?php endforeach ?>
+<?= $this->page($page) ?>
