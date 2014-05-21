@@ -21,7 +21,8 @@ class HtmlController extends AbstractCmsController implements BlockControllerInt
         $pageId = $this->params()->fromQuery('page_id');
         if ($pageId) {
             $page = $this->getPageStorage()->load($pageId);
-            $page->addBlock($block);
+            $position = $this->params()->fromRoute('position');
+            $page->addBlock($block, $position);
             $this->getPageStorage()->save($page);
             return $this->redirect()->toRoute('zfcadmin/cms/page/edit', array('page_id' => $page->getId()));
         } else {

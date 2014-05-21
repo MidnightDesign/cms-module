@@ -48,6 +48,9 @@ class PageAdminController extends AbstractCmsController
     public function editAction()
     {
         $page = $this->getPageStorage()->load($this->params()->fromRoute('page_id'));
+
+        return $this->redirect()->toRoute('cms_page', array('slug' => $page->getSlug()));
+
         $blockTypes = $this->getBlockTypes();
         $blockTypeManager = $this->getBlockTypeManager();
 

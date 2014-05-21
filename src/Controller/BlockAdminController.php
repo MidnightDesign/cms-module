@@ -20,6 +20,13 @@ class BlockAdminController extends AbstractCmsController
         $pageId = $this->params()->fromQuery('page_id');
         $page = $pageId ? $this->getPageStorage()->load($pageId) : null;
 
+        // Get position
+        $position = $this->params()->fromQuery('position');
+        if (null === $position) {
+            $position = count($page->getBlocks());
+        }
+        $position = (integer)$position;
+
         // Redirect if a block type was set
         $typeKey = $this->params()->fromRoute('block_type');
         if ($typeKey) {
@@ -39,12 +46,16 @@ class BlockAdminController extends AbstractCmsController
             }
             return $this->forward()->dispatch(
                 $controllerKey,
-                array('action' => 'create', 'page_id' => $page->getId())
+                array(
+                    'action' => 'create',
+                    'page_id' => $page->getId(),
+                    'position' => $position,
+                )
             );
         }
 
         // View model
-        $vm = new ViewModel(array('blockTypes' => $blockTypes, 'page' => $page));
+        $vm = new ViewModel(array('blockTypes' => $blockTypes, 'page' => $page, 'position' => $position));
         $vm->setTemplate('midnight/cms-module/block-admin/create.phtml');
         return $vm;
     }

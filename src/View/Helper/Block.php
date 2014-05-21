@@ -54,7 +54,7 @@ class Block extends AbstractHelper
     public function __invoke(BlockInterface $block, PageInterface $page)
     {
         $renderer = $this->getRendererFor($block);
-        $content = $renderer($block);
+        $content = $renderer($block, $page);
 
         if ($this->isAdminMode()) {
             $view = $this->getView();
