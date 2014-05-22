@@ -88,6 +88,7 @@ return array(
                         'cms.block.edit',
                         'cms.block.html.edit',
                         'cms.page.add_block',
+                        'cms.page.edit',
                     ),
                 ),
             ),

@@ -3,6 +3,7 @@
 namespace Midnight\CmsModule\Controller;
 
 use Midnight\CmsModule\Controller\Block\BlockControllerInterface;
+use Zend\Http\PhpEnvironment\Request;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -57,6 +58,10 @@ class BlockAdminController extends AbstractCmsController
         // View model
         $vm = new ViewModel(array('blockTypes' => $blockTypes, 'page' => $page, 'position' => $position));
         $vm->setTemplate('midnight/cms-module/block-admin/create.phtml');
+        $request = $this->getRequest();
+        if ($request instanceof Request && $request->isXmlHttpRequest()) {
+            $vm->setTerminal(true);
+        }
         return $vm;
     }
 

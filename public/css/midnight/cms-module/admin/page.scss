@@ -41,13 +41,11 @@
 
 .midnight-cms-block {
     position: relative;
-    background-color: rgba(0, 0, 0, .1);
     outline-offset: .2em;
     &, * {
         cursor: default;
     }
     &.active {
-        background-color: transparent;
         &:hover {
             outline: none;
         }
@@ -111,5 +109,34 @@
     }
     &.active {
         display: block;
+    }
+}
+
+.create-block {
+    border: solid 1px #d3d3d3;
+    border-radius: .2rem;
+    padding: .75rem;
+    h1 {
+        display: none;
+    }
+    ul {
+        display: flex;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    li {
+        display: flex;
+        margin-right: .75rem;
+    }
+    a {
+        @include button;
+        //        display: block;
+        padding: .75rem;
+        text-decoration: inherit;
+        &:visited {
+            color: inherit;
+        }
     }
 }

@@ -142,4 +142,50 @@
 
         $(init);
     }());
+
+    (function createBlockInline() {
+        var CREATE_BLOCK_CLASS = 'create-block';
+
+        function init() {
+            $('body')
+                .on('click', '.' + ADD_BLOCK_CLASS, function (e) {
+                    var $button;
+                    e.preventDefault();
+                    $button = $(this);
+                    $.ajax($button.attr('href'), {
+                        success: function (r) {
+                            $('<div></div>')
+                                .addClass(CREATE_BLOCK_CLASS)
+                                .html(r)
+                                .insertBefore($button);
+                        }
+                    });
+                })
+                .on('click', '.' + CREATE_BLOCK_CLASS, function (e) {
+                    e.stopPropagation();
+                })
+                .on('click', function () {
+                    $('.' + CREATE_BLOCK_CLASS).remove();
+                })
+                .on('click', '.' + CREATE_BLOCK_CLASS + ' a[href]', function (e) {
+                    var $button;
+                    e.preventDefault();
+                    $button = $(this);
+                    $.ajax($button.attr('href'), {
+                        success: function (r) {
+                            var scrollX, scrollY;
+                            scrollY = window.scrollY;
+                            scrollX = window.scrollX;
+
+                            $('.page-blocks').get(0).innerHTML = $(r).find('.page-blocks').html();
+                            setTimeout(function () {
+                                window.scrollTo(scrollX, scrollY);
+                            }, 100);
+                        }
+                    });
+                });
+        }
+
+        $(init);
+    }());
 }(jQuery));

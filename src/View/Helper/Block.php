@@ -62,7 +62,6 @@ class Block extends AbstractHelper
             $headScript = $view->plugin('headScript');
             $basePath = $view->plugin('basePath');
             $headLink
-                ->appendStylesheet($basePath('css/midnight/cms-module/admin/page.css'))
                 ->appendStylesheet($basePath('css/midnight/admin-module/ui.css'));
             $headScript
                 ->appendFile($basePath('js/midnight/cms-module/page.js'))

@@ -5,6 +5,8 @@ namespace Midnight\CmsModule\View\Helper;
 use Midnight\CmsModule\Service\BlockTypeManagerInterface;
 use Midnight\Page\PageInterface;
 use Zend\Form\View\Helper\AbstractHelper;
+use Zend\View\Helper\BasePath;
+use Zend\View\Helper\HeadStyle;
 use Zend\View\Helper\Url;
 use ZfcRbac\Service\AuthorizationServiceInterface;
 
@@ -28,6 +30,9 @@ class Page extends AbstractHelper
     {
         $headTitle = $this->getHeadTitleHelper();
         $headTitle($page->getName());
+        $headLink = $this->getHeadLinkHelper();
+        $basePath = $this->getBasePathHelper();
+        $headLink->appendStylesheet($basePath('css/midnight/cms-module/admin/page.css'));
 
         $r = array();
         $position = 0;
@@ -42,7 +47,12 @@ class Page extends AbstractHelper
             $r[] = $blockHelper($block, $page);
             $r[] = $this->getAddButton($page, $position++);
         }
-        return join(PHP_EOL, $r);
+        $content = join(PHP_EOL, $r);
+        if ($this->authorizationService->isGranted('cms.page.edit')) {
+            return sprintf('<div class="page-blocks">%s</div>', $content);
+        } else {
+            return $content;
+        }
     }
 
     /**
@@ -92,6 +102,22 @@ class Page extends AbstractHelper
     private function getUrlHelper()
     {
         return $this->getView()->plugin('url');
+    }
+
+    /**
+     * @return HeadStyle
+     */
+    private function getHeadLinkHelper()
+    {
+        return $this->getView()->plugin('headLink');
+    }
+
+    /**
+     * @return BasePath
+     */
+    private function getBasePathHelper()
+    {
+        return $this->getView()->plugin('basePath');
     }
 
     /**
