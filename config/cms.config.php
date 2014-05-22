@@ -6,9 +6,15 @@ return array(
     'storage' => array(
         'page' => array(
             'type' => 'Midnight\Page\Storage\Filesystem',
+            'options' => array(
+                'directory' => 'data/cms/pages',
+            ),
         ),
         'block' => array(
             'type' => 'Midnight\Block\Storage\Filesystem',
+            'options' => array(
+                'directory' => 'data/cms/blocks',
+            ),
         ),
     ),
     'blocks' => array(

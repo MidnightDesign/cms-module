@@ -30,11 +30,22 @@ class PageStorageFactory implements FactoryInterface
                 $objectManager = $serviceLocator->get($storageConfig['options']['object_manager']);
                 $storage->setObjectManager($objectManager);
                 break;
+            case 'Midnight\Page\Storage\Filesystem':
             default:
-                $blockStorage = new \Midnight\Block\Storage\Filesystem('data/cms/blocks');
-                $storage = new Filesystem('data/cms/pages', $blockStorage);
+                $blockStorage = $this->getBlockStorage($serviceLocator);
+                $storage = new Filesystem($storageConfig['options']['directory'], $blockStorage);
                 break;
         }
         return $storage;
+    }
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return \Midnight\Block\Storage\StorageInterface
+     */
+    private function getBlockStorage(ServiceLocatorInterface $serviceLocator)
+    {
+        return $serviceLocator->get('cms.block_storage');
     }
 }
