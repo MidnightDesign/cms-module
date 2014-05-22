@@ -5,16 +5,10 @@ namespace Midnight\CmsModule;
 return array(
     'storage' => array(
         'page' => array(
-            'type' => 'Midnight\Page\Storage\Doctrine',
-            'options' => array(
-                'object_manager' => 'doctrine.documentmanager.odm_default',
-            ),
+            'type' => 'Midnight\Page\Storage\Filesystem',
         ),
         'block' => array(
-            'type' => 'Midnight\Block\Storage\Doctrine',
-            'options' => array(
-                'object_manager' => 'doctrine.documentmanager.odm_default',
-            ),
+            'type' => 'Midnight\Block\Storage\Filesystem',
         ),
     ),
     'blocks' => array(
