@@ -13,7 +13,7 @@ class Module implements DependencyIndicatorInterface
      */
     public function getModuleDependencies()
     {
-        return array('Midnight\Wysiwyg');
+        return array('Midnight\Wysiwyg', 'Midnight\AdminModule');
     }
 
     public function getConfig()
