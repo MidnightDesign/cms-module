@@ -24,6 +24,8 @@ Installation
             ->getServiceLocator()
             ->get('user.service')
             ->register('jim@example.com', 'password-here');
+            
+7. Make sure you load jQuery in your layout.
         
 Now you can go to `/admin/cms` and log in with the user you've just created.
 
