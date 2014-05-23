@@ -24,8 +24,9 @@ Installation
             ->getServiceLocator()
             ->get('user.service')
             ->register('jim@example.com', 'password-here');
-            
-7. Make sure jQuery is loaded in your layout:
+
+7. Set the `is_admin` flag of your newly created user to `1`
+8. Make sure jQuery is loaded in your layout:
 
         $this->headScript()
             ->prependFile('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
