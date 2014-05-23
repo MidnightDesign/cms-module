@@ -25,7 +25,10 @@ Installation
             ->get('user.service')
             ->register('jim@example.com', 'password-here');
             
-7. Make sure you load jQuery in your layout.
+7. Make sure jQuery is loaded in your layout:
+
+        $this->headScript()
+            ->prependFile('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
         
 Now you can go to `/admin/cms` and log in with the user you've just created.
 
