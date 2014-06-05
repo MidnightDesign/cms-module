@@ -1,0 +1,19 @@
+<?php
+
+return array(
+    // Store pages and blocks via Doctrine/MongoDB
+//    'storage' => array(
+//        'page' => array(
+//            'type' => 'Midnight\Page\Storage\Doctrine',
+//            'options' => array(
+//                'object_manager' => 'doctrine.documentmanager.odm_default',
+//            ),
+//        ),
+//        'block' => array(
+//            'type' => 'Midnight\Block\Storage\Doctrine',
+//            'options' => array(
+//                'object_manager' => 'doctrine.documentmanager.odm_default',
+//            ),
+//        ),
+//    ),
+);

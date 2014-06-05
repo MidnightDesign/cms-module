@@ -67,15 +67,26 @@ return array(
     ),
     'doctrine' => array(
         'driver' => array(
-            __NAMESPACE__ => array(
+            __NAMESPACE__ . 'mongodb' => array(
                 'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver',
                 'cache' => 'array',
-                'paths' => array(dirname(__DIR__) . '/mapping'),
+                'paths' => array(dirname(__DIR__) . '/mapping/mongodb'),
+            ),
+            __NAMESPACE__ . 'orm' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\XmlDriver',
+                'cache' => 'array',
+                'paths' => array(dirname(__DIR__) . '/mapping/orm'),
             ),
             'odm_default' => array(
                 'drivers' => array(
-                    'Midnight\Page' => __NAMESPACE__,
-                    'Midnight\Block' => __NAMESPACE__,
+                    'Midnight\Page' => __NAMESPACE__ . 'mongodb',
+                    'Midnight\Block' => __NAMESPACE__ . 'mongodb',
+                ),
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'Midnight\Page' => __NAMESPACE__ . 'orm',
+                    'Midnight\Block' => __NAMESPACE__ . 'orm',
                 ),
             ),
         ),

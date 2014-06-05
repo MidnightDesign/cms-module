@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rudi
- * Date: 08.05.14
- * Time: 10:28
- */
 
 namespace Midnight\CmsModule\Controller\Block;
 

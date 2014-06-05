@@ -30,8 +30,9 @@ class BlockStorageFactory implements FactoryInterface
                 $objectManager = $serviceLocator->get($storageConfig['options']['object_manager']);
                 $storage->setObjectManager($objectManager);
                 break;
+            case 'Midnight\Block\Storage\Filesystem':
             default:
-                $storage = new Filesystem('data/cms/blocks');
+                $storage = new Filesystem($storageConfig['options']['directory']);
                 break;
         }
         return $storage;
