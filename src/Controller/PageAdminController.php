@@ -48,12 +48,15 @@ class PageAdminController extends AbstractCmsController
     public function editAction()
     {
         $page = $this->getPageStorage()->load($this->params()->fromRoute('page_id'));
-        $blockTypes = $this->getBlockTypes();
-        $blockTypeManager = $this->getBlockTypeManager();
 
-        $vm = new ViewModel(array('page' => $page, 'blockTypes' => $blockTypes, 'blockTypeManager' => $blockTypeManager));
-        $vm->setTemplate('midnight/cms-module/page-admin/edit.phtml');
-        return $vm;
+        return $this->redirect()->toRoute('cms_page', array('slug' => $page->getSlug()));
+
+//        $blockTypes = $this->getBlockTypes();
+//        $blockTypeManager = $this->getBlockTypeManager();
+//
+//        $vm = new ViewModel(array('page' => $page, 'blockTypes' => $blockTypes, 'blockTypeManager' => $blockTypeManager));
+//        $vm->setTemplate('midnight/cms-module/page-admin/edit.phtml');
+//        return $vm;
     }
 
     public function deleteAction()

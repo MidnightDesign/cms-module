@@ -3,6 +3,7 @@
  * @var \Zend\View\Renderer\PhpRenderer $this
  * @var array                           $blockTypes
  * @var \Midnight\Page\PageInterface    $page
+ * @var integer                         $position
  */
 ?>
 <h1>Neuer Block</h1>
@@ -12,7 +13,10 @@
         $url = $this->url(
             'zfcadmin/cms/block/create',
             array('block_type' => $key),
-            array('query' => array('page_id' => $page->getId()))
+            array('query' => array(
+                'page_id' => $page->getId(),
+                'position' => (string)$position,
+            ))
         );
         ?>
         <li>

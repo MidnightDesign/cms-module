@@ -5,6 +5,7 @@ namespace Midnight\CmsModule\View\Helper;
 use Midnight\CmsModule\Service\BlockTypeManagerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationServiceInterface;
 
 class BlockListFactory implements FactoryInterface
 {
@@ -15,7 +16,9 @@ class BlockListFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new BlockList($this->getBlockTypeManager($serviceLocator));
+        $blockTypeManager = $this->getBlockTypeManager($serviceLocator);
+        $authorizationService = $this->getAuthorizationService($serviceLocator);
+        return new BlockList($blockTypeManager, $authorizationService);
     }
 
     /**
@@ -26,5 +29,15 @@ class BlockListFactory implements FactoryInterface
     private function getBlockTypeManager(ServiceLocatorInterface $serviceLocator)
     {
         return $serviceLocator->getServiceLocator()->get('cms.block_type_manager');
+    }
+
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return AuthorizationServiceInterface
+     */
+    private function getAuthorizationService(ServiceLocatorInterface $serviceLocator)
+    {
+        return $serviceLocator->getServiceLocator()->get('ZfcRbac\Service\AuthorizationService');
     }
 }

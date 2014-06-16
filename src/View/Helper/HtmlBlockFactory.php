@@ -19,7 +19,7 @@ class HtmlBlockFactory implements FactoryInterface
     {
         $htmlBlock = new HtmlBlock();
         $authService = $this->getAuthorizationService($serviceLocator);
-        if ($authService->isGranted('cms.block.html.edit', $htmlBlock)) {
+        if ($authService->isGranted('cms.block.html.edit')) {
             $htmlBlock->setEditable(true);
         }
         return $htmlBlock;

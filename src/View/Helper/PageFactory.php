@@ -5,6 +5,7 @@ namespace Midnight\CmsModule\View\Helper;
 use Midnight\CmsModule\Service\BlockTypeManagerInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use ZfcRbac\Service\AuthorizationServiceInterface;
 
 class PageFactory implements FactoryInterface
 {
@@ -33,6 +34,6 @@ class PageFactory implements FactoryInterface
      */
     private function getBlockTypeManager()
     {
-       return  $this->sl->getServiceLocator()->get('cms.block_type_manager');
+        return $this->sl->getServiceLocator()->get('cms.block_type_manager');
     }
 }

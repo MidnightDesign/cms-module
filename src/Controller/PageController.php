@@ -2,6 +2,7 @@
 
 namespace Midnight\CmsModule\Controller;
 
+use Midnight\Block\Html;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -12,7 +13,12 @@ class PageController extends AbstractCmsController
 {
     public function viewAction()
     {
-        $page = $this->getPageStorage()->loadBySlug($this->params()->fromRoute('slug'));
+        $pageStorage = $this->getPageStorage();
+        $page = $pageStorage->loadBySlug($this->params()->fromRoute('slug'));
+        if (count($page->getBlocks()) === 0) {
+            $page->addBlock(new Html());
+            $pageStorage->save($page);
+        }
         $blockTypes = $this->getBlockTypes();
 
         $vm = new ViewModel(array('page' => $page, 'blockTypes' => $blockTypes));
