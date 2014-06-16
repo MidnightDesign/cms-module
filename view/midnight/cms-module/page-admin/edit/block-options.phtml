@@ -3,7 +3,7 @@
  * @var \Zend\View\Renderer\PhpRenderer                         $this
  * @var \Midnight\CmsModule\InlineBlockOption\OptionInterface[] $options
  */
-$this->headScript()->appendFile($this->basePath('js/midnight/cms-module/page.js'));
+$this->inlineScript()->appendFile($this->basePath('js/midnight/cms-module/page.js'));
 ?>
 <ul class="options">
     <?php foreach ($options as $option): ?>

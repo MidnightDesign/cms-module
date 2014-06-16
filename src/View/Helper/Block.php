@@ -59,11 +59,11 @@ class Block extends AbstractHelper
         if ($this->isAdminMode()) {
             $view = $this->getView();
             $headLink = $view->plugin('headLink');
-            $headScript = $view->plugin('headScript');
+            $inlineScript = $view->plugin('inlineScript');
             $basePath = $view->plugin('basePath');
             $headLink
                 ->appendStylesheet($basePath('css/midnight/admin-module/ui.css'));
-            $headScript
+            $inlineScript
                 ->appendFile($basePath('js/midnight/cms-module/page.js'))
                 ->appendFile($basePath('js/midnight/admin-module/ui.js'));
             /** @var $partial Partial */
