@@ -23,15 +23,8 @@ class Page extends AbstractHelper
         $headTitle = $this->getHeadTitleHelper();
         $headTitle($page->getName());
 
-        $r = array();
-        foreach ($page->getBlocks() as $block) {
-            if (!$this->blockTypeManager->getConfigFor($block)) {
-                continue;
-            }
-            $blockHelper = $this->getView()->plugin('block');
-            $r[] = $blockHelper($block, $page);
-        }
-        return join(PHP_EOL, $r);
+        $blockListHelper = $this->getBlockListHelper();
+        return $blockListHelper($page->getBlocks(), $page);
     }
 
     /**
@@ -53,5 +46,13 @@ class Page extends AbstractHelper
     private function getBlockHelper()
     {
         return $this->getView()->plugin('block');
+    }
+
+    /**
+     * @return BlockList
+     */
+    private function getBlockListHelper()
+    {
+        return $this->getView()->plugin('blockList');
     }
 }

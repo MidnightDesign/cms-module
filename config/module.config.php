@@ -40,6 +40,7 @@ return array(
     'view_helpers' => array(
         'factories' => array(
             'block' => 'Midnight\CmsModule\View\Helper\BlockFactory',
+            'blockList' => 'Midnight\CmsModule\View\Helper\BlockListFactory',
             'blockPreview' => 'Midnight\CmsModule\View\Helper\BlockPreviewFactory',
             'htmlBlock' => 'Midnight\CmsModule\View\Helper\HtmlBlockFactory',
             'cmsMenu' => 'Midnight\CmsModule\Menu\View\Helper\CmsMenuFactory',

@@ -4,7 +4,7 @@ namespace Midnight\CmsModule\View\Helper;
 
 use Midnight\Block\Html;
 use Midnight\Wysiwyg\View\Helper\Wysiwyg;
-use Zend\Form\View\Helper\AbstractHelper;
+use Zend\View\Helper\AbstractHelper;
 
 class HtmlBlock extends AbstractHelper
 {

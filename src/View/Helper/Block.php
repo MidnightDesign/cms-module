@@ -54,7 +54,7 @@ class Block extends AbstractHelper
     public function __invoke(BlockInterface $block, PageInterface $page)
     {
         $renderer = $this->getRendererFor($block);
-        $content = $renderer($block);
+        $content = $renderer($block, $page);
 
         if ($this->isAdminMode()) {
             $view = $this->getView();
@@ -66,7 +66,7 @@ class Block extends AbstractHelper
                 ->appendStylesheet($basePath('css/midnight/admin-module/ui.css'));
             $headScript
                 ->appendFile($basePath('js/midnight/cms-module/page.js'))
-                ->appendFile($basePath('js/admin-module/ui.js'));
+                ->appendFile($basePath('js/midnight/admin-module/ui.js'));
             /** @var $partial Partial */
             $partial = $this->getView()->plugin('partial');
             $options = $partial(

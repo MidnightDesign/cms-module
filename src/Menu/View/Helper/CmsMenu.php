@@ -2,6 +2,7 @@
 
 namespace Midnight\CmsModule\Menu\View\Helper;
 
+use Exception;
 use Midnight\CmsModule\Menu\Item\ItemInterface;
 use Midnight\CmsModule\Menu\MenuInterface;
 use Midnight\CmsModule\Menu\Storage\StorageInterface;
@@ -65,6 +66,7 @@ class CmsMenu extends AbstractHelper
     /**
      * @param string $menuId
      *
+     * @throws Exception
      * @return MenuInterface
      */
     private function getMenu($menuId)
@@ -72,7 +74,11 @@ class CmsMenu extends AbstractHelper
         if (self::DEFAULT_MENU === $menuId) {
             $menuId = $this->getDefaultMenuId();
         }
-        return $this->getStorage()->load($menuId);
+        $menu = $this->getStorage()->load($menuId);
+        if(null === $menu) {
+            throw new Exception(sprintf('Couldn\'t load menu "%s".', $menuId));
+        }
+        return $menu;
     }
 
     /**

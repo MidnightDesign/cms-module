@@ -2,6 +2,7 @@
 
 namespace Midnight\CmsModule\Menu\Storage;
 
+use Exception;
 use Midnight\CmsModule\Menu\MenuHydrator;
 use Midnight\CmsModule\Menu\MenuInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
@@ -51,6 +52,7 @@ class JsonStorage implements StorageInterface
     /**
      * @param MenuInterface $menu
      *
+     * @throws Exception
      * @return void
      */
     public function save(MenuInterface $menu)
@@ -58,7 +60,10 @@ class JsonStorage implements StorageInterface
         $data = $this->getData($menu);
         $data['class'] = get_class($menu);
         $json = json_encode($data, JSON_PRETTY_PRINT);
-        file_put_contents($this->getPath($menu->getId()), $json);
+        $bytesWritten = file_put_contents($this->getPath($menu->getId()), $json);
+        if (false === $bytesWritten) {
+            throw new Exception(sprintf('Couldn\'t save menu "%s".', $menu->getId()));
+        }
     }
 
     /**
