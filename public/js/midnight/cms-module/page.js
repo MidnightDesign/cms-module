@@ -117,9 +117,6 @@
         }
 
         function init() {
-            $('.' + ADD_BLOCK_CLASS).each(function () {
-                positionButtons($(this));
-            });
             $('body')
                 .on('mouseover', '.' + BLOCK_CLASS, function () {
                     var $block, $buttons;
